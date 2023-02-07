@@ -17,7 +17,7 @@
         </td>
         <td>
           <button (click)="remove(task)" type="remove-button">X</button>
-          <button (click)="markAsDone(task)" type="done-button">
+          <button (click)="task.toggleIsDone()" type="done-button"><!--Here the task is the task which is looped . the inserted tasks-->
             {{ task.isDone? "Undo" : "Done"}}
           </button>
         </td>
