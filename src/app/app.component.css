@@ -1,0 +1,13 @@
+header{
+    background-image: linear-gradient(120deg, #222222,#171717
+    );
+    margin: -10px;
+    margin-bottom: 50px;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 3.5rem;
+    font-family: 'Roboto';
+    font-weight: bold;
+    padding: 5rem 4rem;
+}
