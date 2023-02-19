@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute,Route } from '@angular/router';
 
 @Component({
   selector: 'task-list',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route:ActivatedRoute) { }
 
+  date = new Date();
+  newTaskTitle : string ="";
   ngOnInit(): void {
+    this.date = new Date(this.route.snapshot.params['date']);
   }
 
   tasks : Task[] =  [
@@ -19,8 +23,8 @@ export class TaskListComponent implements OnInit {
     new Task('Go to Gym'),
     new Task('Going for Tutions')
   ]
-  add(newTask : string){
-    this.tasks.push(new Task(newTask));
+  add(){
+    this.tasks.push(new Task(this.newTaskTitle));
   }
 
   remove(existingTask : Task){
