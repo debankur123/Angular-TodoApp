@@ -28,6 +28,8 @@ export class TaskListComponent implements OnInit {
     // assigning a validation
     if(taskNgForm.touched == false)
       return;
+    if(taskNgForm.valid==false)
+      return;
 
     this.tasks.push(new Task(this.newTaskTitle));
     taskNgForm.reset({date : this.date});
