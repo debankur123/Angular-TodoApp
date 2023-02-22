@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TaskListComponent } from './task-list.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
+import { TaskService } from './task.service';
 
 @NgModule({
   declarations: [
     TaskListComponent
   ],
+  providers :[TaskService],
   imports: [
     CommonModule,
     MatDatepickerModule,
@@ -17,4 +19,4 @@ import { FormsModule } from '@angular/forms';
     TaskListComponent
   ]
 })
-export class TaskListModule { }
+export class TaskModule { }

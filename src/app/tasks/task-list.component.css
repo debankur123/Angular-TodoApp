@@ -44,7 +44,7 @@
   .add-button {
     border-style: none;
     cursor: pointer;
-    color: #ffffff;
+    color: #252323;
     background-color: rgb(23, 23, 23);
     font-size: x-large;
     font-weight: bold;
@@ -55,6 +55,13 @@
     cursor: pointer;
     height: 100%;
   }
+
+  button:disabled{
+    background-color:  rgb(138, 131, 131);
+    cursor: default;
+
+  }
+
   .done-button {
     background-color: #242424;
     color: #ffffff;

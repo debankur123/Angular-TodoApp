@@ -1,18 +1,26 @@
 <div class="container">
     <div class="todo-list">
-      <form (ngSubmit)="add(taskNgForm);" #taskNgForm="ngForm">
+      <form (ngSubmit)="add(taskNgForm);" #taskNgForm="ngForm" #form>
         <div class="input-group">
-          <input name="date" [matDatepicker]="picker" [(ngModel)]="date">
+          <input readonly name="date" [matDatepicker]="picker" [(ngModel)]="newTask.date">
           <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </div>
     
         <!--We want to show the title of the component through one way data binding-->
         <div class="input-group">
-          <input #newTask="ngModel" required name="taskTitle" type="text" placeholder="Todo's" [(ngModel)]="newTaskTitle" > <!--Local referencing '#newTask'-->
-          <button  type="add-button">+</button> <!--Here we binded an event which listens to the add() listner which is done in parenthesis.-->
+          <input #newTaskngModel="ngModel" required minlength="4" name="taskTitle" type="text" placeholder="Todo's" [(ngModel)]="newTask.title" > <!--Local referencing '#newTask'-->
+          <button [disabled]="!form.checkValidity()" type="add-button">+</button> <!--Here we binded an event which listens to the add() listner which is done in parenthesis.-->
         </div>
-        <div *ngIf="newTask.invalid && (newTask.touched || newTask.dirty)" class="validation-error" >Task field is required</div>
+        <div *ngIf="newTaskngModel.invalid && (newTaskngModel.touched || newTaskngModel.dirty)" class="validation-error" >
+          <div *ngIf="newTaskngModel.errors?.['required']" >
+            Task title is required.
+          </div>
+
+          <div *ngIf="newTaskngModel.errors?.['minlength']" >
+            Task title must contain at least 4 characters.
+          </div>
+        </div>
       </form>
 
       <table>
