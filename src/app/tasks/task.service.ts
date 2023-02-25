@@ -18,12 +18,12 @@ export class TaskService {
     new TaskItem('Going for Tutions')
   ]
 
-  getAllTasks() : TaskItem[]{
+  getAllTasks() : ReadonlyArray<TaskItem>{
     return this.tasks;
   }
 
   addTask(newTask: NewTask){
-    this.tasks.push(new TaskItem(newTask.title));
+    this.tasks = this.tasks.concat(new TaskItem(newTask.title));
   }
 
   removeTask(existingTask : TaskItem){
