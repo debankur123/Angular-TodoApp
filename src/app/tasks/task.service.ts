@@ -1,32 +1,39 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable ,map, tap } from 'rxjs';
 import { NewTask } from './new-TaskDTO';
 import { TaskItem } from './task-itemDTO';
+import {HttpClient} from '@angular/common/http';
 
+const resourceURL = 'http://localhost:3001/tasks';
 
 // Sevice provider scope
-// @Injectable({
-//   providedIn: 'root'
-// })
+@Injectable()
 export class TaskService {
 
-  constructor() { }
-  private tasks : TaskItem[] =  [
-    new TaskItem('Visit medical store'),
-    new TaskItem('Go to Shop'),
-    new TaskItem('Visit Office'),
-    new TaskItem('Go to Gym'),
-    new TaskItem('Going for Tutions')
-  ]
+  constructor(private httpClient : HttpClient) { }
+  private tasks = new BehaviorSubject<TaskItem[]>([])
 
-  getAllTasks() : ReadonlyArray<TaskItem>{
+  getAllTasks(date : Date) : Observable<TaskItem[]>{
+    this.httpClient.get<TaskItem[]>(`${resourceURL}/${date}`)
+    .pipe(map(TaskService.mapTaskItem))
+    .subscribe(t => this.tasks.next(t))
+
     return this.tasks;
   }
 
-  addTask(newTask: NewTask){
-    this.tasks = this.tasks.concat(new TaskItem(newTask.title));
+  addTask(date : Date,newTask: NewTask){
+    var updatedTasks = this.tasks.value.concat(new TaskItem(newTask.title));
+    this.httpClient.post(`${resourceURL}/${newTask.date}`,newTask)
+    .subscribe(() => this.tasks.next(updatedTasks));
   }
 
-  removeTask(existingTask : TaskItem){
-    this.tasks = this.tasks.filter(task => task != existingTask);
+  removeTask(date : Date,existingTask : TaskItem){
+    var updatedTasks = this.tasks.value.filter(task => task != existingTask);
+    this.httpClient.delete(`${resourceURL}/${date}/${existingTask.title}`)
+    .subscribe(() =>this.tasks.next(updatedTasks));
+  }
+  // mapping all the added items to the tasks as an array of objects
+  public static mapTaskItem(items : {title : string}[]){
+    return items.map(item => new TaskItem(item.title));
   }
 }

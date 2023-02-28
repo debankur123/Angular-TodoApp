@@ -25,7 +25,7 @@
 
       <table>
         <!--For each element in array we want to create a table row -->
-        <tr *ngFor="let task of tasks ; let i=index" [class.odd] = "i%2" >
+        <tr *ngFor="let task of tasks |async ; let i=index" [class.odd] = "i%2" >
           <td>
             <p [class.is-done] = "task.isDone" >
               {{task.title}} <!--All will be loaded through components-->
